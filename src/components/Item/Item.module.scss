@@ -1,0 +1,28 @@
+@import '../../styles/variables';
+
+.item {
+  position: relative;
+  padding: 2rem 1rem 1.1rem;
+  width: 13.75rem;
+  height: 18.125rem;
+  border-radius: 0.5rem;
+  background-color: white;
+}
+
+.description {
+  color: $dark-grey;
+  font-weight: 300;
+  font-size: 0.9rem;
+}
+
+.offer {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+
+  background-color: $pink;
+  color: white;
+  padding: 0 0.5rem;
+  border-top-right-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+}

@@ -21,6 +21,7 @@ module.exports = {
       'light-grey': '#DADADA',
       'light-yellow': '#FDC8444D',
       'bg-color': '#FAFAFA',
+      'yellow': '#FDC844',
     },
     fontFamily: {
       sans: ['Graphik', 'sans-serif'],
