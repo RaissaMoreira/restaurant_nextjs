@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Item from '../Item';
 import { IBurger } from '@component/utils/types';
+import styles from "./ItemsList.module.scss";
 
 export default function ItemsList() {
     const [data, setData] = useState<IBurger[]>([])
@@ -23,7 +24,7 @@ export default function ItemsList() {
     }, [])
 
   return (
-    <div className="flex space-x-2">
+    <div className={`${styles.container} flex gap-2`}>
       {data.burguers?.map((el) => (
         <Item key={el.id} item={el}/>
       ))}

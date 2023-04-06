@@ -1,0 +1,12 @@
+@import '../../styles/variables';
+
+.container {
+  padding: 1.5rem;
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 740px){
+  .container {
+    justify-content: center;
+  }
+}

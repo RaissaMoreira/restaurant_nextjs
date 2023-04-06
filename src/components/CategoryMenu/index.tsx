@@ -1,13 +1,19 @@
 import { useState } from 'react';
 import { categoriesList } from '../../utils/constants';
 import styles from './CategoryMenu.module.scss';
+import { useStore } from '../../store/store';
 
 export default function CategoryMenu() {
-  const [selectedCategory, setSelectedCategory] = useState('pizza');
+  const [categoryActive, setCategoryActive] = useState('pizza');
+  const category = useStore((state) => state.changeCategory);
+  const { selectedCategory } = useStore();
 
   const onCategoryClick = (id: string) => {
-    setSelectedCategory(id);
+    setCategoryActive(id);
+    category(id);
   }
+
+  console.log(selectedCategory)
 
   return (
     <div className={styles.categoryMenu}>
@@ -18,7 +24,7 @@ export default function CategoryMenu() {
           <li 
             key={category?.id} 
             onClick={() => onCategoryClick(category?.id)}
-            className={selectedCategory === category?.id && styles.activeCategory}
+            className={categoryActive === category?.id && styles.activeCategory}
           >
             <Icon size={40} className={styles.icons} />
             <span className={styles.textCategory}>{category?.label}</span>
