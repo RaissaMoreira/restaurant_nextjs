@@ -6,14 +6,11 @@ import { useStore } from '../../store/store';
 export default function CategoryMenu() {
   const [categoryActive, setCategoryActive] = useState('pizza');
   const category = useStore((state) => state.changeCategory);
-  const { selectedCategory } = useStore();
 
   const onCategoryClick = (id: string) => {
     setCategoryActive(id);
     category(id);
   }
-
-  console.log(selectedCategory)
 
   return (
     <div className={styles.categoryMenu}>

@@ -9,6 +9,6 @@ type Action = {
 }
 
 export const useStore = create<State & Action>((set) => ({
-  selectedCategory: '',
+  selectedCategory: 'pizza',
   changeCategory: (selectedCategory) => set(() => ({ selectedCategory: selectedCategory }))
 }))

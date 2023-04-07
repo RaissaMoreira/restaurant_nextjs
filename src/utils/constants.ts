@@ -12,5 +12,5 @@ export const categoriesList: IcategoriesList[] = [
   { label: 'Bebidas', icon: CiBeerMugFull, id: 'drinks' },
   { label: 'Doces', icon: CiIceCream, id: 'deserts' },
   { label: 'Combos', icon: CiFries, id: 'combo' },
-  { label: 'Burguers', icon: CiBurger, id: 'burguer' }
+  { label: 'Burguers', icon: CiBurger, id: 'burguers' }
 ]
