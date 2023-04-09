@@ -1,7 +1,8 @@
 export interface IFood {
+  description: string;
   id: number | string;
   name: string;
-  description: string;
-  price: number;
   offer: boolean;
+  price: number;
+  quantity?: number
 }

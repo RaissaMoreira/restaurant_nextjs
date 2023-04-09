@@ -7,6 +7,14 @@
   height: 18rem;
   border-radius: 0.5rem;
   background-color: white;
+  cursor: pointer;
+  transition: transform .2s;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+
+  &:hover {
+    transform: scale(1.03);
+    z-index: 99;
+  }
 }
 
 .description {
@@ -41,6 +49,7 @@
     padding: 1rem;
     width: 100%;
     height: fit-content;
+    box-shadow: none;
 
     .textPrice {
       text-align: end;
@@ -48,7 +57,6 @@
 
     .imgFood {
       position: relative;
-      margin-bottom: 1rem;
       height: 70px !important;
       min-width: 80px !important;
       max-width: 80px !important;

@@ -1,5 +1,4 @@
 import Image from "next/image";
-import burguer from "../../assets/images/burguer.png";
 import styles from "./Item.module.scss";
 import { IFood } from "@component/utils/types";
 import { useStore } from "@component/store/store";
@@ -9,15 +8,19 @@ interface ItemProps {
 }
 
 export default function Item({ item }: ItemProps) {
-  const { selectedCategory } = useStore();
-  const imagePath = `/images/${selectedCategory}/${item.id}.png`;
-  console.log(imagePath)
+  const { addToCart } = useStore();
+  const imagePath = `/images/${item.id}.png`;
+
+  const handleAddToCart = () => {
+    addToCart(item);
+  }
 
   return (
     <div
       className={`${styles.item} flex flex-col justify-between items-center`}
+      onClick={handleAddToCart}
     >
-      <div className={`${styles.imgFood} h-full`}>
+      <div className={`${styles.imgFood} ${item?.offer && 'mb-[1rem]'} h-full`}>
         {item?.offer && <div className={`${styles.offer}`}>oferta</div>}
         <Image 
           src={imagePath}
