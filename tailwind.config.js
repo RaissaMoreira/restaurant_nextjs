@@ -10,10 +10,19 @@ module.exports = {
   ],
   theme: {
     screens: {
-      sm: '380px',
+      xsm: '320px',
+      sm: '375px',
+      gsm: '410px',
+      msm: '480px',
+      ltm: '570px',
+      lsm: '680px',
       md: '740px',
-      lg: '976px',
-      xl: '1440px',
+      lmd: '864px',
+      dlg: '1024px',
+      lg: '1199px',
+      xl: '1280px',
+      '1xl': '1367px',
+      '2xl': '1536px', 
     },
     colors: {
       'pink': '#FF2351',

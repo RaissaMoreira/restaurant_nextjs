@@ -30,7 +30,7 @@ export default function ItemsList() {
   }, [selectedCategory]);
 
   return (
-    <div className={`${styles.container} ${loading && 'justify-center items-center w-full'} flex flex-col`}>
+    <div className={`${styles.container} ${loading && 'justify-center items-center w-full'} w-full flex flex-col`}>
       {loading ? (
         <Loading active={loading} />
       ) : (

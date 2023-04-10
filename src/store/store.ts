@@ -1,16 +1,19 @@
 import { create } from 'zustand'
 
 type State = {
+  totalPrice: any;
   cart: any[];
   selectedCategory: string
   changeCategory: (selectedCategory: State['selectedCategory']) => void;
   addToCart: (newItem: any) => void;
   deleteItem: (deleteItem: any) => void;
+  totalItems: (state: State) => number;
 };
 
 export const useStore = create<State>((set) => ({
   selectedCategory: 'pizza',
   cart: [],
+  totalPrice: 0,
 
   changeCategory: (selectedCategory) => set(() => ({ selectedCategory: selectedCategory })),
 
@@ -37,14 +40,19 @@ export const useStore = create<State>((set) => ({
         updatedCartItem,
         ...state.cart.slice(index + 1),
       ];
-      return { cart: updatedCart };
+      const totalPrice = updatedCart.reduce(
+        (acc, item) => acc + item.price * item.quantity,
+        0
+      );
+      return { cart: updatedCart, totalPrice };
     } else {
       /*
       Se o item não existir no carrinho,
       criado um novo objeto que é uma cópia de newItem 
       com a propriedade quantity definida como 1
       */
-      return { cart: [...state.cart, { ...newItem, quantity: 1 }] };
+      return { cart: [...state.cart, { ...newItem, quantity: 1 }],
+      totalPrice: state.totalPrice + newItem.price, };
     }
   }),
 
@@ -63,10 +71,24 @@ export const useStore = create<State>((set) => ({
         updatedCartItem,
         ...state.cart.slice(index + 1),
       ];
-      return { cart: updatedCart };
+      const totalPrice = updatedCart.reduce(
+        (acc, item) => acc + item.price * item.quantity,
+        0
+      );
+      return { cart: updatedCart, totalPrice };
     } else {
       const filteredCart = state.cart.filter((item) => item.id !== deleteItem.id);
-      return { cart: filteredCart };
+      const totalPrice = filteredCart.reduce(
+        (acc, item) => acc + item.price * item.quantity,
+        0
+      );
+      return { cart: filteredCart, totalPrice };
     }
-  })
+  }),
+
+  totalItems: (state) => {
+    return state.cart.reduce((acc, item) => {
+      return acc + (item.price * item.quantity);
+    }, 0)
+  }
 }))
