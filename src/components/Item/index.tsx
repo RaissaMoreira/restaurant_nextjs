@@ -2,6 +2,8 @@ import Image from "next/image";
 import styles from "./Item.module.scss";
 import { IFood } from "@component/utils/types";
 import { useStore } from "@component/store/store";
+import UseWindowSize from "@component/hooks/useWindowSize";
+import { useRouter } from "next/router";
 
 interface ItemProps {
   item: IFood;
@@ -10,9 +12,15 @@ interface ItemProps {
 export default function Item({ item }: ItemProps) {
   const { addToCart } = useStore();
   const imagePath = `/images/${item.id}.png`;
+  const size = UseWindowSize();
+  const router = useRouter();
 
   const handleAddToCart = () => {
-    addToCart(item);
+    if (size.width <= 700) {
+      router.push(`/AddToCart/${item.id}`);
+    } else {
+      addToCart(item);
+    }
   }
 
   return (
@@ -35,9 +43,9 @@ export default function Item({ item }: ItemProps) {
         <p className={styles.description}>{item?.description}</p>
         <p
           className={`${styles.textPrice} text-[1.1rem] font-bold text-yellow`}
-        >{`R$ ${item?.price.toLocaleString("pt-br", {
+        >{`R$ ${item?.price?.toLocaleString("pt-br", {
           minimumFractionDigits: 2,
-        })}`}</p>
+        }) ?? '0,00'}`}</p>
       </div>
     </div>
   );

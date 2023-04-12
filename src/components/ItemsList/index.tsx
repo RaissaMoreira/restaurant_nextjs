@@ -21,7 +21,7 @@ export default function ItemsList() {
         setLoading(false);
       }, 100);
     } catch (error) {
-      console.log(error);
+      console.warn(error);
     }
   }
 
