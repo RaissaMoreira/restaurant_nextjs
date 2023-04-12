@@ -6,6 +6,8 @@ import { useStore } from "@component/store/store";
 import { IFood } from "@component/utils/types";
 import { capitalizeFirstLetter } from "@component/services/functions";
 import Loading from "../Loading";
+import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
+import ObsModal from "../Observations";
 
 export default function ItemsList() {
   const [foods, setFoods] = useState<IFood[]>([]);

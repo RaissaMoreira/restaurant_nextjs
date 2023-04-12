@@ -16,11 +16,13 @@ export default function Item({ item }: ItemProps) {
   const router = useRouter();
 
   const handleAddToCart = () => {
-    if (size.width <= 700) {
-      router.push(`/AddToCart/${item.id}`);
-    } else {
-      addToCart(item);
-    }
+    // if (size.width <= 700) {
+    //   router.push(`/AddToCart/${item.id}`);
+    // } else {
+    //   addToCart(item);
+    // }
+
+    addToCart(item);
   }
 
   return (

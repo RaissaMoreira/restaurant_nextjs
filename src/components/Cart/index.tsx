@@ -1,6 +1,7 @@
 import { useStore } from "@component/store/store";
 import styles from "./Cart.module.scss";
 import CartItem from "../CartItem";
+
 interface ICart {
   extendedClass?: string;
 }

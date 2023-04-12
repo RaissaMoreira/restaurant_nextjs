@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import styles from '../../styles/AddToCart.module.scss';
+import styles from '../../styles/Observation.module.scss';
 import Link from 'next/link';
 import { CgArrowLongLeft } from "react-icons/cg";
 import { IFood } from '@component/utils/types';
