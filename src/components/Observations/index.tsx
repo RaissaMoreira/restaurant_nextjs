@@ -1,11 +1,12 @@
 import { useStore } from "@component/store/store";
 import styles from "./Observations.module.scss";
 import { useState } from "react";
-import Modal from '@mui/material/Modal';
+import Modal from "@mui/material/Modal";
 
 export default function ObsModal({ item }) {
-  const { addToCart, deleteItem } = useStore();
+  const { addToCart, deleteItem, updateObservations } = useStore();
   const [open, setOpen] = useState(false);
+  const [obs, setObs] = useState(item.observations);
 
   const removeItem = () => {
     item?.quantity === 1 ? setOpen(true) : deleteItem(item);
@@ -19,7 +20,6 @@ export default function ObsModal({ item }) {
         <p className="font-semibold">Quantidade</p>
         <div className="flex gap-[0.5rem]">
           <span
-            // onClick={() => deleteItem(item)}
             onClick={removeItem}
             className="text-[1.1rem] font-bold cursor-pointer"
           >
@@ -43,11 +43,18 @@ export default function ObsModal({ item }) {
         <textarea
           placeholder="Coloque suas observações..."
           className={styles.obs}
-          id="story"
-          name="story"
+          id="observations"
+          name="observations"
+          value={obs}
+          onChange={(e) => setObs(e.target.value)}
           rows={5}
           cols={33}
         />
+        <div className="w-full mt-3 flex items-center justify-evenly">
+          <button className={styles.btnRemove} onClick={() => updateObservations(item.id, obs)}>
+            Salvar
+          </button>
+        </div>
       </div>
 
       <Modal
@@ -57,10 +64,19 @@ export default function ObsModal({ item }) {
         aria-describedby="modal-modal-description"
       >
         <div className={styles.containerModal}>
-          <p className="font-bold text-[1.3rem] mb-2">Deseja remover esse item do carrinho?</p>
+          <p className="font-bold text-[1.3rem] mb-2">
+            Deseja remover esse item do carrinho?
+          </p>
           <div className="w-full flex items-center justify-evenly">
-            <button className={styles.btnCancel} onClick={() => setOpen(false)}>Cancelar</button>
-            <button className={styles.btnRemove} onClick={() => deleteItem(item)}>Sim, remover</button>
+            <button className={styles.btnCancel} onClick={() => setOpen(false)}>
+              Cancelar
+            </button>
+            <button
+              className={styles.btnRemove}
+              onClick={() => deleteItem(item)}
+            >
+              Sim, remover
+            </button>
           </div>
         </div>
       </Modal>

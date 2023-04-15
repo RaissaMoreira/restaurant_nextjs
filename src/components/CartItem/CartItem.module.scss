@@ -6,14 +6,13 @@
   align-items: center;
   width: 100%;
   margin-bottom: 0.1rem;
-  // padding-bottom: 1.4rem;
-  // border-bottom: 1px solid $light-grey;
 }
 
 .image {
   background-color: $light-yellow;
   padding: 0.7rem 0.5rem;
   border-radius: 5px;
+  min-width: 66px;
 }
 
 .item {

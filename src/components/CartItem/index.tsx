@@ -25,10 +25,10 @@ export default function Cart({ item }: IFood) {
                   unoptimized
                 />
               </div>
-              <div className={styles.description}>
+              <div className={`${styles.description}`}>
                 <h4 className="text-[1.1rem] font-semibold">{item.name}</h4>
-                <p className="text-[0.8rem] cursor-pointer underline decoration-solid text-dark-grey">
-                  Adicionar observação
+                <p title={item.observations !== undefined ? item.observations : 'Adicionar observação'} className={`${styles.obsText} text-[0.8rem] cursor-pointer ${item.observations === undefined && 'underline decoration-solid'} text-dark-grey`}>
+                  {item.observations !== undefined ? item.observations : 'Adicionar observação'}
                 </p>
               </div>
             </div>

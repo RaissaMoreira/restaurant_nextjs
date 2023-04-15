@@ -5,9 +5,10 @@ type State = {
   cart: any[];
   selectedCategory: string
   changeCategory: (selectedCategory: State['selectedCategory']) => void;
-  addToCart: (newItem: any) => void;
+  addToCart: (newItem: any, observations: string) => void;
   deleteItem: (deleteItem: any) => void;
   totalItems: (state: State) => number;
+  updateObservations: (observations: string, id: number) => void;
 };
 
 export const useStore = create<State>((set) => ({
@@ -17,7 +18,24 @@ export const useStore = create<State>((set) => ({
 
   changeCategory: (selectedCategory) => set(() => ({ selectedCategory: selectedCategory })),
 
-  addToCart: (newItem) => set((state) => {
+  updateObservations: (id, observations) => set((state) => {
+    const index = state.cart.findIndex(item => item.id === id);
+    if (index >= 0) {
+      const updatedCartItem = {
+        ...state.cart[index],
+        observations: observations,
+      };
+      const updatedCart = [
+        ...state.cart.slice(0, index),
+        updatedCartItem,
+        ...state.cart.slice(index + 1),
+      ];
+      return { cart: updatedCart };
+    }
+    return state;
+  }),
+
+  addToCart: (newItem, observations) => set((state) => {
     const cartItem = state.cart.find(item => item.id === newItem.id);
     const index = state.cart.findIndex(item => item.id === newItem.id);
 
@@ -51,7 +69,8 @@ export const useStore = create<State>((set) => ({
       criado um novo objeto que é uma cópia de newItem 
       com a propriedade quantity definida como 1
       */
-      return { cart: [...state.cart, { ...newItem, quantity: 1 }],
+      const itemWithObservations = { ...newItem, quantity: 1, observations };
+      return { cart: [...state.cart, itemWithObservations],
       totalPrice: state.totalPrice + newItem.price, };
     }
   }),
