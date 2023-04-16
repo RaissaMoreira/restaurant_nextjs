@@ -4,5 +4,6 @@ export interface IFood {
   name: string;
   offer: boolean;
   price: number;
-  quantity?: number
+  quantity?: number;
+  observations?: undefined | string;
 }

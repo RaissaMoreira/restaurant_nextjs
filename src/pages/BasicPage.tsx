@@ -5,7 +5,6 @@ import Cart from "@component/components/Cart";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { useState } from "react";
 import UseWindowSize from '../hooks/useWindowSize';
-import { CgArrowLongLeft } from "react-icons/cg";
 
 export default function BasicPage() {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,8 +23,8 @@ export default function BasicPage() {
       <ItemsList />
 
       <div className={`${(isOpen && size.width <= 1100) ? styles.menuOverlay : "hidden"}`} onClick={() => setIsOpen(false)} ></div>
-      {(isOpen && size.width <= 1100) && (<Cart extendedClass="fixed right-0 h-[100%] w-full msm:w-[80%] md:w-[50%]" />)}
-      {size.width > 1100 && <Cart />}
+      {(isOpen && size.width <= 1100) && (<Cart buttonActive={true} extendedClass="fixed right-0 h-[100%] w-full msm:w-[80%] md:w-[50%]" />)}
+      {size.width > 1100 && <Cart buttonActive={true} />}
     </div>
   );
 }

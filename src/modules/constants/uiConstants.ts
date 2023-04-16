@@ -1,0 +1,1 @@
+export const fullNameRegex = /^\s*([A-zÀ-ÿ]{2,})+(\s([A-zÀ-ÿ]{1,})+)+\s*$/gms;

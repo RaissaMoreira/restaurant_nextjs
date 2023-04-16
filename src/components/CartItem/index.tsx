@@ -5,8 +5,10 @@ import Accordion from "@mui/material/Accordion";
 import { AccordionDetails, AccordionSummary } from "@mui/material";
 import Observations from "../Observations";
 
-export default function Cart({ item }: IFood) {
+export default function CartItem({ item }: IFood) {
   const imagePath = `/images/${item.id}.png`;
+
+  console.log(item)
 
   return (
     <div className={styles.container}>
