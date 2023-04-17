@@ -22,6 +22,23 @@ button, input, select, textarea {
   font-family: 'Poppins', sans-serif;
 }
 
+.btnStyles {
+  background-color: $pink;
+  border: 2px solid $pink;
+  width: 180px;
+  color: white;
+  font-weight: 500;
+  border-radius: 0.5rem;
+}
+
+.btnCancel {
+  color: $dark-grey;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  width: 180px;
+  border: 2px solid $dark-grey;
+}
+
 @media screen and (max-width: 740px) {
   body {
     background-color: #fff;

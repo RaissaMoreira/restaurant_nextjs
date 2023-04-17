@@ -1,18 +1,8 @@
 import { create } from "zustand";
-import { persist, createJSONStorage  } from "zustand/middleware";
+import { persist, createJSONStorage } from "zustand/middleware";
+import { StateOne, StateTwo } from "./types";
 
-type State = {
-  totalPrice: any;
-  cart: any[];
-  selectedCategory: string;
-  changeCategory: (selectedCategory: State["selectedCategory"]) => void;
-  addToCart: (newItem: any, observations: string) => void;
-  deleteItem: (deleteItem: any) => void;
-  totalItems: (state: State) => number;
-  updateObservations: (observations: string, id: number) => void;
-};
-
-export const useStore = create<State>((set) => ({
+export const useStore = create<StateOne>((set) => ({
   selectedCategory: "pizza",
   cart: [],
   totalPrice: 0,
@@ -119,4 +109,27 @@ export const useStore = create<State>((set) => ({
       return acc + item.price * item.quantity;
     }, 0);
   },
+}));
+
+export const useFormStore = create<StateTwo>((set) => ({
+  form: {
+    name: "",
+    celular: "",
+  },
+  dataForm: [],
+
+  cleanValues: () =>
+    set((prevState) => ({
+      ...prevState,
+      form: {
+        ...prevState?.form,
+        name: "",
+        celular: "",
+      },
+    })),
+
+  addDataForm: (newData) =>
+    set((state) => ({
+      dataForm: [...state.dataForm, { ...newData }],
+    })),
 }));

@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { categoriesList } from '../../utils/constants';
 import styles from './CategoryMenu.module.scss';
 import { useStore } from '../../store/store';
+import { BsGear } from "react-icons/bs";
+import { showToast } from "@component/modules/toast";
 
 export default function CategoryMenu() {
   const [categoryActive, setCategoryActive] = useState('pizza');
@@ -10,6 +12,10 @@ export default function CategoryMenu() {
   const onCategoryClick = (id: string) => {
     setCategoryActive(id);
     category(id);
+  }
+
+  const handleSoon = () => {
+    showToast({message: 'Em Breve!', status: 'warning'});
   }
 
   return (
@@ -28,6 +34,11 @@ export default function CategoryMenu() {
           </li>
         );
       })}
+
+      <li onClick={handleSoon}>
+        <BsGear size={35} className={styles.icons}/>
+        <span className={styles.textCategory}>Gerenciamento</span>
+      </li>
       </ul>
     </div>
   )
