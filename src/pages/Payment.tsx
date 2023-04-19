@@ -12,6 +12,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import Modal from "@mui/material/Modal";
 import Address from "@component/components/Address";
+import CardAddress from "@component/components/Address/CardAddress";
 
 export default function Payment() {
   const form = useFormStore((s) => s.form);
@@ -19,6 +20,7 @@ export default function Payment() {
   const [isOpen, setIsOpen] = useState(false);
   const size = UseWindowSize();
   const [open, setOpen] = useState(false);
+  const [selectedValue, setSelectedValue] = useState('store');
 
   const handleClick = useCallback(
     async (e: any) => {
@@ -57,6 +59,8 @@ export default function Payment() {
     addDataForm({ ...form });
     cleanValues();
   };
+
+  console.log("form:::", form);
 
   return (
     <section className="w-full flex justify-between">
@@ -115,10 +119,11 @@ export default function Payment() {
                 <input
                   type="radio"
                   className={styles.radio}
-                  id="loja"
-                  name="drone"
-                  value="loja"
-                  checked
+                  id="store"
+                  name="deliveryType"
+                  value="store"
+                  checked={selectedValue === 'store'}
+                  onChange={(e) => setSelectedValue(e.target.value)}
                 />
                 <label htmlFor="loja">Retirar na loja</label>
               </div>
@@ -127,13 +132,16 @@ export default function Payment() {
                   type="radio"
                   className={styles.radio}
                   id="delivery"
-                  name="drone"
+                  name="deliveryType"
                   value="delivery"
+                  checked={selectedValue === 'delivery'}
+                  onChange={(e) => setSelectedValue(e.target.value)}
                 />
                 <label htmlFor="delivery">Delivery</label>
               </div>
             </div>
-            <p onClick={() => setOpen(true)} className="text-pink cursor-pointer underline decoration-solid text-[0.9rem]">Adicionar endereço</p>
+            <CardAddress/>
+            <p onClick={() => setOpen(true)} className={selectedValue === 'delivery' ? 'text-pink cursor-pointer underline decoration-solid text-[0.9rem]' : 'hidden'}>Adicionar endereço</p>
           </div>
           <button
             className="btnStyles py-1"

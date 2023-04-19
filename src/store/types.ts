@@ -13,8 +13,13 @@ export interface StateTwo {
   form: {
     name: string;
     celular: string | number;
+    cep: string | number;
+    street: string;
+    number: string | number;
+    city: string;
   },
   dataForm: any[];
   addDataForm: (newData: any) => void;
   cleanValues: () => void;
+  cleanAddressValues?: () => void;
 };

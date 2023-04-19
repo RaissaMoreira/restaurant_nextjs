@@ -111,10 +111,63 @@ export const useStore = create<StateOne>((set) => ({
   },
 }));
 
+// const persistConfig = {
+//   name: 'form-storage',
+//   getStorage: () => localStorage, // ou sessionStorage
+// };
+
+// export const useFormStore = create(
+//   persist<StateTwo>(
+//     (set, get) => ({
+//       form: {
+//         name: '',
+//         celular: '',
+//         cep: '',
+//         street: '',
+//         number: '',
+//         city: '',
+//       },
+//       dataForm: [],
+
+//       cleanValues: () =>
+//         set((prevState) => ({
+//           ...prevState,
+//           form: {
+//             ...prevState?.form,
+//             name: '',
+//             celular: '',
+//           },
+//         })),
+
+//       cleanAddressValues: () =>
+//         set((prevState) => ({
+//           ...prevState,
+//           form: {
+//             ...prevState?.form,
+//             cep: '',
+//             street: '',
+//             number: '',
+//             city: '',
+//           },
+//         })),
+
+//       addDataForm: (newData) =>
+//         set((state) => ({
+//           dataForm: [...state.dataForm, { ...newData }],
+//         })),
+//     }),
+//     persistConfig,
+//   ),
+// );
+
 export const useFormStore = create<StateTwo>((set) => ({
   form: {
     name: "",
     celular: "",
+    cep: "",
+    street: "",
+    number: "",
+    city: "",
   },
   dataForm: [],
 
@@ -127,6 +180,18 @@ export const useFormStore = create<StateTwo>((set) => ({
         celular: "",
       },
     })),
+
+    // cleanAddressValues: () => 
+    //   set((prevState) => ({
+    //     ...prevState,
+    //     form: {
+    //       ...prevState?.form,
+    //       cep: "",
+    //       street: "",
+    //       number: "",
+    //       city: "",
+    //     }
+    //   })),
 
   addDataForm: (newData) =>
     set((state) => ({

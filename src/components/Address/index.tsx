@@ -1,11 +1,84 @@
-import { SetStateAction } from "react";
+import { ChangeEvent, SetStateAction, useCallback } from "react";
 import styles from "./Address.module.scss";
+import { useFormStore } from "@component/store/store";
+import { showToast } from "@component/modules/toast";
+import { formAddress } from "@component/modules/schemas";
+import axios from "axios";
 
 interface IAddress {
-  closeModal: (value: SetStateAction<boolean>) => void;
+  closeModal: () => void;
 }
 
 export default function Address({closeModal}: IAddress) {
+  const form = useFormStore((s) => s.form);
+  const { addDataForm } = useFormStore();
+
+  const handleInputChange = (e: any) => {
+    const { name, value } = e.target;
+    useFormStore.setState((s) => ({
+      ...s,
+      form: {
+        ...s.form,
+        [name]: value,
+      },
+    }));
+  };
+
+  const searchCEP = useCallback(async (e: string) => {
+    try {
+      const cepNewLength = e.includes("-") ? 9 : 8;
+
+      if (e.length == cepNewLength) {
+        const res = await axios.get(`https://viacep.com.br/ws/${e}/json/`);
+
+        useFormStore.setState((prevState) => ({
+          ...prevState,
+          form: {
+            ...prevState.form,
+            city: res?.data?.cep ? res?.data?.localidade : "",
+            street: res?.data?.cep ? res?.data?.logradouro : "",
+          },
+        }));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
+  const getCep = (e: string) => {
+    useFormStore.setState((s) => ({ ...s, form: { ...s.form, cep: e } }));
+    searchCEP(e);
+  };
+
+  const handleClickSaveAddress = useCallback(
+    async (e: any) => {
+      e.preventDefault();
+      try {
+        await formAddress.validate({
+          cep: form?.cep,
+          street: form?.street,
+          number: form?.number,
+          city: form?.city,
+        });
+        onSave(e);
+        showToast({
+          message: "Endereço salvo com sucesso!",
+          status: "success",
+        });
+      } catch (error) {
+        showToast({ message: error?.message, status: "error" });
+        console.log(error);
+      }
+    },
+    [form]
+  );
+
+  const onSave = (e: any) => {
+    e.preventDefault();
+    addDataForm({ ...form });
+    closeModal();
+  };
+
   return (
     <div className={styles.containerModal}>
       <h1 className="text-[1.5rem] w-full font-bold text-start">Adicionar endereço</h1>
@@ -17,8 +90,10 @@ export default function Address({closeModal}: IAddress) {
           <input
             name="cep"
             id="cep"
-            // value={form.name}
-            // onChange={handleInputChange}
+            tabIndex={1}
+            maxLength={9}
+            onChange={(e) => getCep(e.target.value)}
+            value={form.cep}
             required
             placeholder="Digite seu CEP"
             type="text"
@@ -31,8 +106,8 @@ export default function Address({closeModal}: IAddress) {
           <input
             name="city"
             id="city"
-            // value={form.name}
-            // onChange={handleInputChange}
+            value={form.city}
+            onChange={handleInputChange}
             required
             placeholder="Digite sua cidade"
             type="text"
@@ -47,8 +122,8 @@ export default function Address({closeModal}: IAddress) {
           <input
             name="street"
             id="street"
-            // value={form.name}
-            // onChange={handleInputChange}
+            value={form.street}
+            onChange={handleInputChange}
             required
             placeholder="Digite sua rua"
             type="text"
@@ -62,8 +137,8 @@ export default function Address({closeModal}: IAddress) {
           <input
             name="number"
             id="number"
-            // value={form.name}
-            // onChange={handleInputChange}
+            value={form.number}
+            onChange={handleInputChange}
             required
             placeholder="Digite o número"
             type="text"
@@ -74,7 +149,7 @@ export default function Address({closeModal}: IAddress) {
 
       <div className="w-full flex items-center justify-evenly">
         <button onClick={closeModal} className="btnCancel py-1">Cancelar</button>
-        <button className="btnStyles py-1">Adicionar</button>
+        <button onClick={handleClickSaveAddress} type="submit" className="btnStyles py-1">Adicionar</button>
       </div>
     </div>
   );
