@@ -7,6 +7,7 @@ export interface StateOne {
   deleteItem: (deleteItem: any) => void;
   totalItems: (state: StateOne) => number;
   updateObservations: (observations: string, id: number) => void;
+  cleanCart: () => void;
 };
 
 export interface StateTwo {
@@ -17,9 +18,14 @@ export interface StateTwo {
     street: string;
     number: string | number;
     city: string;
+    state: string;
+    neighborhood: string;
+    deliveryType: string;
+    paymentType: string;
   },
   dataForm: any[];
   addDataForm: (newData: any) => void;
   cleanValues: () => void;
-  cleanAddressValues?: () => void;
+  deleteAddress: () => void;
+  cleanAddressValues: () => void;
 };

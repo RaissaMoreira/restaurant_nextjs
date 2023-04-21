@@ -1,26 +1,30 @@
 import Cart from "@component/components/Cart";
 import Link from "next/link";
 import { CgArrowLongLeft } from "react-icons/cg";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import UseWindowSize from "@component/hooks/useWindowSize";
 import styles from "../styles/Payment.module.scss";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { formUser } from "@component/modules/schemas";
-import { useFormStore } from "@component/store/store";
+import { useFormStore, useStore } from "@component/store/store";
 import { showToast } from "@component/modules/toast";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.min.css";
 import Modal from "@mui/material/Modal";
 import Address from "@component/components/Address";
 import CardAddress from "@component/components/Address/CardAddress";
+import { useRouter } from "next/router";
 
 export default function Payment() {
   const form = useFormStore((s) => s.form);
-  const { addDataForm, cleanValues } = useFormStore();
+  const { cleanCart } = useStore();
+  const { addDataForm, cleanValues, deleteAddress, dataForm } = useFormStore();
   const [isOpen, setIsOpen] = useState(false);
   const size = UseWindowSize();
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState('store');
+  const [selectPayment, setSelectedPayment] = useState('card');
+
+  console.log(dataForm)
 
   const handleClick = useCallback(
     async (e: any) => {
@@ -30,14 +34,32 @@ export default function Payment() {
           name: form?.name,
           celular: form?.celular,
         });
-        onSubmit(e);
-        showToast({
-          message: "Pedido realizado com sucesso!",
-          status: "success",
-        });
+
+        if(form?.deliveryType === 'delivery') {
+          form?.cep ? 
+            (
+              onSubmit(e),
+              
+              showToast({
+              message: "Pedido realizado com sucesso!",
+              status: "success",
+            }),
+            router.push("/"),
+            cleanCart()
+            ):
+            showToast({ message: "Adicione o endereço!", status: "error" });;
+        } else {
+          onSubmit(e);
+          showToast({
+            message: "Pedido realizado com sucesso!",
+            status: "success",
+          });
+          router.push("/");
+          cleanCart();
+        }
       } catch (error) {
         showToast({ message: error?.message, status: "error" });
-        console.log(error);
+        console.warn(error);
       }
     },
     [form]
@@ -60,7 +82,11 @@ export default function Payment() {
     cleanValues();
   };
 
-  console.log("form:::", form);
+  useEffect(() => {
+    if(selectedValue === 'store') {
+      deleteAddress();
+    }
+  }, [selectedValue])
 
   return (
     <section className="w-full flex justify-between">
@@ -78,6 +104,7 @@ export default function Payment() {
           Voltar
         </Link>
         <div className={styles.container}>
+          <div className="flex flex-col justify-evenly">
           <div className={`${styles.form} mb-10`}>
             <h1 className="font-semibold mb-3 text-[1.3rem]">Seus dados</h1>
             <form className="flex flex-col items-start gap-3 justify-center">
@@ -91,6 +118,7 @@ export default function Payment() {
                   value={form.name}
                   onChange={handleInputChange}
                   required
+                  className="md:w-1/2 w-full"
                   placeholder="Seu nome"
                   type="text"
                 />
@@ -105,6 +133,7 @@ export default function Payment() {
                   placeholder="Seu celular"
                   type="text"
                   required
+                  className="md:w-1/2 w-full"
                   value={form.celular}
                   onChange={handleInputChange}
                 />
@@ -112,7 +141,7 @@ export default function Payment() {
             </form>
           </div>
 
-          <div className={styles.address}>
+          <div className='mb-5'>
             <h1 className="font-semibold mb-3 text-[1.3rem]">Endereço</h1>
             <div className="flex items-center space-x-5 justify-start">
               <div className="space-x-1 flex items-center justify-start">
@@ -123,9 +152,12 @@ export default function Payment() {
                   name="deliveryType"
                   value="store"
                   checked={selectedValue === 'store'}
-                  onChange={(e) => setSelectedValue(e.target.value)}
+                  onChange={(e) => {
+                    setSelectedValue(e.target.value),
+                    handleInputChange(e)
+                  }}
                 />
-                <label htmlFor="loja">Retirar na loja</label>
+                <label htmlFor="loja" className="text-dark-grey">Retirar na loja</label>
               </div>
               <div className="space-x-1 flex items-center justify-start">
                 <input
@@ -135,13 +167,72 @@ export default function Payment() {
                   name="deliveryType"
                   value="delivery"
                   checked={selectedValue === 'delivery'}
-                  onChange={(e) => setSelectedValue(e.target.value)}
+                  onChange={(e) => {
+                    setSelectedValue(e.target.value),
+                    handleInputChange(e)
+                  }}
                 />
-                <label htmlFor="delivery">Delivery</label>
+                <label htmlFor="delivery" className="text-dark-grey">Delivery</label>
               </div>
             </div>
-            <CardAddress/>
-            <p onClick={() => setOpen(true)} className={selectedValue === 'delivery' ? 'text-pink cursor-pointer underline decoration-solid text-[0.9rem]' : 'hidden'}>Adicionar endereço</p>
+            {selectedValue === 'delivery' && <CardAddress/>}
+            
+            <p onClick={() => setOpen(true)} className={selectedValue === 'delivery' ? 'text-pink cursor-pointer underline decoration-solid text-[0.9rem] mt-3' : 'hidden'}>
+              {form?.cep ? 'Editar endereço' : 'Adicionar endereço'}
+            </p>
+          </div>
+
+          <div className={styles.payment}>
+            <h1 className="font-semibold mb-3 text-[1.3rem]">Pagamento</h1>
+            <p className="font-semibold mb-3 text-[1rem]">Método de pagamento:</p>
+            <div className="flex items-center space-x-5 justify-start">
+              <div className="space-x-1 flex items-center justify-start">
+                <input
+                  type="radio"
+                  className={styles.radio}
+                  id="card"
+                  name="paymentType"
+                  value="card"
+                  checked={selectPayment === 'card'}
+                  onChange={(e) => {
+                    setSelectedPayment(e.target.value),
+                    handleInputChange(e)
+                  }}
+                />
+                <label htmlFor="card" className="text-dark-grey">Cartão</label>
+              </div>
+              <div className="space-x-1 flex items-center justify-start">
+                <input
+                  type="radio"
+                  className={styles.radio}
+                  id="pix"
+                  name="paymentType"
+                  value="pix"
+                  checked={selectPayment === 'pix'}
+                  onChange={(e) => {
+                    setSelectedPayment(e.target.value),
+                    handleInputChange(e)
+                  }}
+                />
+                <label htmlFor="pix" className="text-dark-grey">Pix</label>
+              </div>
+              <div className="space-x-1 flex items-center justify-start">
+                <input
+                  type="radio"
+                  className={styles.radio}
+                  id="cash"
+                  name="paymentType"
+                  value="cash"
+                  checked={selectPayment === 'cash'}
+                  onChange={(e) => {
+                    setSelectedPayment(e.target.value),
+                    handleInputChange(e)
+                  }}
+                />
+                <label htmlFor="cash" className="text-dark-grey">Dinheiro</label>
+              </div>
+            </div>
+          </div>
           </div>
           <button
             className="btnStyles py-1"
@@ -158,7 +249,11 @@ export default function Payment() {
         onClose={() => setOpen(false)}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
-      ><Address closeModal={() => setOpen(false)}/></Modal>
+      >
+        <>
+          <Address closeModal={() => setOpen(false)}/>
+        </>
+      </Modal>
 
       <div
         className={`${
@@ -173,19 +268,6 @@ export default function Payment() {
         />
       )}
       {size.width > 1100 && <Cart buttonActive={false} />}
-
-      <ToastContainer
-        position="bottom-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
     </section>
   );
 }

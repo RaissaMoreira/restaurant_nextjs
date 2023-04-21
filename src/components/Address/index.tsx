@@ -1,4 +1,4 @@
-import { ChangeEvent, SetStateAction, useCallback } from "react";
+import { ChangeEvent, SetStateAction, useCallback, useEffect } from "react";
 import styles from "./Address.module.scss";
 import { useFormStore } from "@component/store/store";
 import { showToast } from "@component/modules/toast";
@@ -37,6 +37,8 @@ export default function Address({closeModal}: IAddress) {
             ...prevState.form,
             city: res?.data?.cep ? res?.data?.localidade : "",
             street: res?.data?.cep ? res?.data?.logradouro : "",
+            state: res?.data?.cep ? res?.data?.uf : "",
+            neighborhood: res?.data?.cep ? res?.data?.bairro : "",
           },
         }));
       }
@@ -59,6 +61,8 @@ export default function Address({closeModal}: IAddress) {
           street: form?.street,
           number: form?.number,
           city: form?.city,
+          state: form?.state,
+          neighborhood: form?.neighborhood,
         });
         onSave(e);
         showToast({
@@ -67,7 +71,7 @@ export default function Address({closeModal}: IAddress) {
         });
       } catch (error) {
         showToast({ message: error?.message, status: "error" });
-        console.log(error);
+        console.warn(error);
       }
     },
     [form]
@@ -93,25 +97,57 @@ export default function Address({closeModal}: IAddress) {
             tabIndex={1}
             maxLength={9}
             onChange={(e) => getCep(e.target.value)}
-            value={form.cep}
+            value={form.cep || ""}
             required
             placeholder="Digite seu CEP"
             type="text"
           />
         </div>
-        <div className="w-full flex flex-col items-start space-y-2">
+        <div className="flex items-center flex-col space-y-3 ltm:space-y-0 ltm:flex-row ltm:space-x-5">
+        <div className="w-full flex flex-col items-start space-y-2 ltm:w-[30%]">
           <label htmlFor="city" className="font-semibold">
             Cidade*
           </label>
           <input
             name="city"
             id="city"
-            value={form.city}
+            value={form.city || ""}
             onChange={handleInputChange}
             required
-            placeholder="Digite sua cidade"
+            placeholder="Cidade"
             type="text"
           />
+        </div>
+
+        <div className="w-full flex flex-col items-start space-y-2 ltm:w-[20%]">
+          <label htmlFor="state" className="font-semibold">
+            Estado*
+          </label>
+          <input
+            name="state"
+            id="state"
+            value={form.state || ""}
+            onChange={handleInputChange}
+            required
+            placeholder="Estado"
+            type="text"
+          />
+        </div>
+
+        <div className="w-full flex flex-col items-start space-y-2 ltm:w-[60%]">
+          <label htmlFor="neighborhood" className="font-semibold">
+            Bairro*
+          </label>
+          <input
+            name="neighborhood"
+            id="neighborhood"
+            value={form.neighborhood || ""}
+            onChange={handleInputChange}
+            required
+            placeholder="Digite o Bairro"
+            type="text"
+          />
+        </div>
         </div>
 
         <div className="flex items-center flex-col space-y-3 ltm:space-y-0 ltm:flex-row ltm:space-x-5">
@@ -122,7 +158,7 @@ export default function Address({closeModal}: IAddress) {
           <input
             name="street"
             id="street"
-            value={form.street}
+            value={form.street || ""}
             onChange={handleInputChange}
             required
             placeholder="Digite sua rua"
@@ -137,7 +173,7 @@ export default function Address({closeModal}: IAddress) {
           <input
             name="number"
             id="number"
-            value={form.number}
+            value={form.number || ""}
             onChange={handleInputChange}
             required
             placeholder="Digite o número"

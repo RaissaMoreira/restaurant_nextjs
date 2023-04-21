@@ -31,10 +31,14 @@
   color: $dark-grey;
 }
 
-.textCategory {
+.textCategory, .textOrder {
   font-weight: 500;
   font-size: 0.875rem;
   color: $dark-grey;
+}
+
+.textOrder, .iconOrder {
+  color: #000;
 }
 
 .activeCategory {

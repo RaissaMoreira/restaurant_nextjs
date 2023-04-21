@@ -10,6 +10,10 @@ export const useStore = create<StateOne>((set) => ({
   changeCategory: (selectedCategory) =>
     set(() => ({ selectedCategory: selectedCategory })),
 
+  cleanCart: () => {
+    set({ cart: [], totalPrice: 0 });
+  },
+
   updateObservations: (id, observations) =>
     set((state) => {
       const index = state.cart.findIndex((item) => item.id === id);
@@ -111,90 +115,79 @@ export const useStore = create<StateOne>((set) => ({
   },
 }));
 
-// const persistConfig = {
-//   name: 'form-storage',
-//   getStorage: () => localStorage, // ou sessionStorage
-// };
+const persistConfig = {
+  name: "form-storage",
+  getStorage: () => localStorage, // ou sessionStorage
+};
 
-// export const useFormStore = create(
-//   persist<StateTwo>(
-//     (set, get) => ({
-//       form: {
-//         name: '',
-//         celular: '',
-//         cep: '',
-//         street: '',
-//         number: '',
-//         city: '',
-//       },
-//       dataForm: [],
-
-//       cleanValues: () =>
-//         set((prevState) => ({
-//           ...prevState,
-//           form: {
-//             ...prevState?.form,
-//             name: '',
-//             celular: '',
-//           },
-//         })),
-
-//       cleanAddressValues: () =>
-//         set((prevState) => ({
-//           ...prevState,
-//           form: {
-//             ...prevState?.form,
-//             cep: '',
-//             street: '',
-//             number: '',
-//             city: '',
-//           },
-//         })),
-
-//       addDataForm: (newData) =>
-//         set((state) => ({
-//           dataForm: [...state.dataForm, { ...newData }],
-//         })),
-//     }),
-//     persistConfig,
-//   ),
-// );
-
-export const useFormStore = create<StateTwo>((set) => ({
-  form: {
-    name: "",
-    celular: "",
-    cep: "",
-    street: "",
-    number: "",
-    city: "",
-  },
-  dataForm: [],
-
-  cleanValues: () =>
-    set((prevState) => ({
-      ...prevState,
+export const useFormStore = create(
+  persist<StateTwo>(
+    (set) => ({
       form: {
-        ...prevState?.form,
         name: "",
         celular: "",
+        cep: "",
+        street: "",
+        number: "",
+        city: "",
+        state: "",
+        neighborhood: "",
+        deliveryType: "store",
+        paymentType: "cartão",
       },
-    })),
+      dataForm: [],
 
-    // cleanAddressValues: () => 
-    //   set((prevState) => ({
-    //     ...prevState,
-    //     form: {
-    //       ...prevState?.form,
-    //       cep: "",
-    //       street: "",
-    //       number: "",
-    //       city: "",
-    //     }
-    //   })),
+      cleanValues: () =>
+        set((prevState) => ({
+          ...prevState,
+          form: {
+            ...prevState?.form,
+            name: "",
+            celular: "",
+            cep: "",
+            street: "",
+            number: "",
+            city: "",
+            state: "",
+            neighborhood: "",
+            deliveryType: "store",
+            paymentType: "cartão",
+          },
+        })),
 
-  addDataForm: (newData) =>
-    set((state) => ({
-      dataForm: [...state.dataForm, { ...newData }],
-    })),
-}));
+      cleanAddressValues: () =>
+        set((prevState) => ({
+          ...prevState,
+          form: {
+            ...prevState?.form,
+            cep: "",
+            street: "",
+            number: "",
+            city: "",
+            state: "",
+            neighborhood: "",
+          },
+        })),
+
+      deleteAddress: () =>
+        set((prevState) => {
+          const { name, celular, paymentType, deliveryType } = prevState.form; // mantém apenas nome e celular
+          return {
+            ...prevState,
+            form: {
+              name,
+              celular,
+              deliveryType,
+              paymentType,
+            },
+          };
+        }),
+
+      addDataForm: (newData) =>
+        set((state) => ({
+          dataForm: [...state.dataForm, { ...newData }],
+        })),
+    }),
+    persistConfig
+  )
+);

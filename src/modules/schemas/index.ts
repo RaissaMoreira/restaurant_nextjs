@@ -11,4 +11,6 @@ export const formAddress = Yup.object().shape({
     street: Yup.string().required("O campo 'Rua' é obrigatório"),
     number: Yup.string().min(1, 'Número iválido').required("O campo 'Número' é obrigatório"),
     city: Yup.string().required("O campo 'Cidade' é obrigatório"),
+    state: Yup.string().required("O campo 'Estado' é obrigatório"),
+    neighborhood: Yup.string().required("O campo 'Bairro' é obrigatório"),
   });

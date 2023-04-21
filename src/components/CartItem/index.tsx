@@ -8,8 +8,6 @@ import Observations from "../Observations";
 export default function CartItem({ item }: IFood) {
   const imagePath = `/images/${item.id}.png`;
 
-  console.log(item)
-
   return (
     <div className={styles.container}>
       <Accordion className="w-full">
