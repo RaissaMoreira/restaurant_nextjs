@@ -106,5 +106,19 @@
           "price": 45.0,
           "offer": false
       }
+  ],
+  "status": [
+    {
+      "id": 1,
+      "type": "Solicitado"
+    },
+    {
+      "id": 2,
+      "type": "Em produção"
+    },
+    {
+      "id": 3,
+      "type": "Finalizado"
+    }
   ]
 }

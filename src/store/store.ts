@@ -1,8 +1,10 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { StateOne, StateTwo } from "./types";
+import { StateOne, StateThree, StateTwo } from "./types";
 
-export const useStore = create<StateOne>((set) => ({
+export const useStore = create(
+  persist<StateOne>(
+    (set) => ({
   selectedCategory: "pizza",
   cart: [],
   totalPrice: 0,
@@ -113,7 +115,12 @@ export const useStore = create<StateOne>((set) => ({
       return acc + item.price * item.quantity;
     }, 0);
   },
-}));
+}),
+  {
+    name: "cart-storage",
+    getStorage: () => localStorage, // ou sessionStorage
+  }
+));
 
 const persistConfig = {
   name: "form-storage",
@@ -137,6 +144,16 @@ export const useFormStore = create(
       },
       dataForm: [],
 
+      // address: {
+      //   cep: "",
+      //   street: "",
+      //   number: "",
+      //   city: "",
+      //   state: "",
+      //   neighborhood: "",
+      // },
+      // dataAddress: [],
+
       cleanValues: () =>
         set((prevState) => ({
           ...prevState,
@@ -155,19 +172,19 @@ export const useFormStore = create(
           },
         })),
 
-      cleanAddressValues: () =>
-        set((prevState) => ({
-          ...prevState,
-          form: {
-            ...prevState?.form,
-            cep: "",
-            street: "",
-            number: "",
-            city: "",
-            state: "",
-            neighborhood: "",
-          },
-        })),
+      // cleanAddressValues: () =>
+      //   set((prevState) => ({
+      //     ...prevState,
+      //     form: {
+      //       ...prevState?.dataAddress,
+      //       cep: "",
+      //       street: "",
+      //       number: "",
+      //       city: "",
+      //       state: "",
+      //       neighborhood: "",
+      //     },
+      //   })),
 
       deleteAddress: () =>
         set((prevState) => {
@@ -187,7 +204,55 @@ export const useFormStore = create(
         set((state) => ({
           dataForm: [...state.dataForm, { ...newData }],
         })),
+
+      deleteData: (index) => {
+        set((state) => {
+          const newDataForm = [...state.dataForm];
+          newDataForm.splice(index, 1);
+          return { dataForm: newDataForm };
+        });
+      },
+
     }),
     persistConfig
   )
 );
+
+export const useAddressStore = create(
+  persist<StateThree>(
+    (set) => ({
+      address: {
+        cep: "",
+        street: "",
+        number: "",
+        city: "",
+        state: "",
+        neighborhood: "",
+      },
+      dataAddress: [],
+
+      addDataAddress: (newDataAddress) =>
+        set((state) => ({
+          dataAddress: [...state.dataAddress, { ...newDataAddress }],
+        })),
+
+      cleanAddressValues: () =>
+        set((prevState) => ({
+          ...prevState,
+          address: {
+            ...prevState?.address,
+            cep: "",
+            street: "",
+            number: "",
+            city: "",
+            state: "",
+            neighborhood: "",
+          },
+      })),
+    }),
+    {
+      name: "address-storage",
+      getStorage: () => localStorage,
+    } // ou sessionStorage
+  )
+)

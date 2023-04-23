@@ -14,3 +14,5 @@ export const categoriesList: IcategoriesList[] = [
   { label: 'Combos', icon: CiFries, id: 'combo' },
   { label: 'Burguers', icon: CiBurger, id: 'burguers' }
 ]
+
+export const nonDigitCharacters = /\D/g;

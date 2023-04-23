@@ -11,7 +11,6 @@ interface IAddress {
 
 export default function Address({closeModal}: IAddress) {
   const form = useFormStore((s) => s.form);
-  const { addDataForm } = useFormStore();
 
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
@@ -79,7 +78,6 @@ export default function Address({closeModal}: IAddress) {
 
   const onSave = (e: any) => {
     e.preventDefault();
-    addDataForm({ ...form });
     closeModal();
   };
 

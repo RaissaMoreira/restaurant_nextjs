@@ -1,7 +1,7 @@
 import Cart from "@component/components/Cart";
 import Link from "next/link";
 import { CgArrowLongLeft } from "react-icons/cg";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import UseWindowSize from "@component/hooks/useWindowSize";
 import styles from "../styles/Payment.module.scss";
 import { AiOutlineShoppingCart } from "react-icons/ai";
@@ -15,6 +15,7 @@ import { useRouter } from "next/router";
 
 export default function Payment() {
   const form = useFormStore((s) => s.form);
+  const cart = useStore((s) => s.cart);
   const { cleanCart } = useStore();
   const { addDataForm, cleanValues, deleteAddress, dataForm } = useFormStore();
   const [isOpen, setIsOpen] = useState(false);
@@ -23,8 +24,6 @@ export default function Payment() {
   const [open, setOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState('store');
   const [selectPayment, setSelectedPayment] = useState('card');
-
-  console.log(dataForm)
 
   const handleClick = useCallback(
     async (e: any) => {
@@ -78,7 +77,7 @@ export default function Payment() {
 
   const onSubmit = (e: any) => {
     e.preventDefault();
-    addDataForm({ ...form });
+    addDataForm({ ...form, order: cart });
     cleanValues();
   };
 
