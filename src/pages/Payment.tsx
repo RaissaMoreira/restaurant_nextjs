@@ -1,28 +1,29 @@
 import Cart from "@component/components/Cart";
 import Link from "next/link";
 import { CgArrowLongLeft } from "react-icons/cg";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import UseWindowSize from "@component/hooks/useWindowSize";
 import styles from "../styles/Payment.module.scss";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { formUser } from "@component/modules/schemas";
 import { useFormStore, useStore } from "@component/store/store";
-import { showToast } from "@component/modules/toast";
 import Modal from "@mui/material/Modal";
 import Address from "@component/components/Address";
 import CardAddress from "@component/components/Address/CardAddress";
 import { useRouter } from "next/router";
+import { ToastContext } from "@component/context/ToastContext";
 
 export default function Payment() {
+  const { showToast } = useContext(ToastContext);
   const form = useFormStore((s) => s.form);
   const cart = useStore((s) => s.cart);
   const { cleanCart } = useStore();
-  const { addDataForm, cleanValues, deleteAddress, dataForm } = useFormStore();
+  const { addDataForm, cleanValues, deleteAddress } = useFormStore();
   const [isOpen, setIsOpen] = useState(false);
   const size = UseWindowSize();
   const router = useRouter();
   const [open, setOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState('store');
+  const [selectedValue, setSelectedValue] = useState('loja');
   const [selectPayment, setSelectedPayment] = useState('card');
 
   const handleClick = useCallback(
@@ -82,7 +83,7 @@ export default function Payment() {
   };
 
   useEffect(() => {
-    if(selectedValue === 'store') {
+    if(selectedValue === 'loja') {
       deleteAddress();
     }
   }, [selectedValue])
@@ -147,10 +148,10 @@ export default function Payment() {
                 <input
                   type="radio"
                   className={styles.radio}
-                  id="store"
+                  id="loja"
                   name="deliveryType"
-                  value="store"
-                  checked={selectedValue === 'store'}
+                  value="loja"
+                  checked={selectedValue === 'loja'}
                   onChange={(e) => {
                     setSelectedValue(e.target.value),
                     handleInputChange(e)
@@ -219,16 +220,16 @@ export default function Payment() {
                 <input
                   type="radio"
                   className={styles.radio}
-                  id="cash"
+                  id="dinheiro"
                   name="paymentType"
-                  value="cash"
-                  checked={selectPayment === 'cash'}
+                  value="dinheiro"
+                  checked={selectPayment === 'dinheiro'}
                   onChange={(e) => {
                     setSelectedPayment(e.target.value),
                     handleInputChange(e)
                   }}
                 />
-                <label htmlFor="cash" className="text-dark-grey">Dinheiro</label>
+                <label htmlFor="dinheiro" className="text-dark-grey">Dinheiro</label>
               </div>
             </div>
           </div>

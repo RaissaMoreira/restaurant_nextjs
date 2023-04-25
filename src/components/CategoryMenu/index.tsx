@@ -3,7 +3,6 @@ import { categoriesList } from "../../utils/constants";
 import styles from "./CategoryMenu.module.scss";
 import { useStore } from "../../store/store";
 import { BsGear } from "react-icons/bs";
-import { showToast } from "@component/modules/toast";
 import Link from "next/link";
 
 export default function CategoryMenu() {
@@ -14,10 +13,6 @@ export default function CategoryMenu() {
     setCategoryActive(id);
     category(id);
   };
-
-  // const handleSoon = () => {
-  //   showToast({ message: "Em Breve!", status: "warning" });
-  // };
 
   return (
     <div className={styles.categoryMenu}>
@@ -39,8 +34,8 @@ export default function CategoryMenu() {
         })}
 
         <Link href="/Order" className="md:mt-5 flex flex-col items-center justify-center space-y-1">
-          <BsGear size={35} className={styles.iconOrder} />
-          <span className={`${styles.textOrder} text-pink`}>Gerenciamento</span>
+          <BsGear size={35} className={styles.icons} />
+          <span className={styles.textCategory}>Gerenciamento</span>
         </Link>
       </ul>
     </div>

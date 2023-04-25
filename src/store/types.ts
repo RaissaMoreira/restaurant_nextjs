@@ -3,7 +3,7 @@ export interface StateOne {
   cart: any[];
   selectedCategory: string;
   changeCategory: (selectedCategory: StateOne["selectedCategory"]) => void;
-  addToCart: (newItem: any, observations: string) => void;
+  addToCart: (newItem: any) => void;
   deleteItem: (deleteItem: any) => void;
   totalItems: (state: StateOne) => number;
   updateObservations: (observations: string, id: number) => void;
@@ -41,20 +41,4 @@ export interface StateTwo {
   cleanValues: () => void;
   deleteAddress: () => void;
   deleteData: (id: any) => void;
-}
-
-
-export interface StateThree {
-  address: {
-    cep: string | number;
-    street: string;
-    number: string | number;
-    city: string;
-    state: string;
-    neighborhood: string;
-  }
-
-  dataAddress: any[];
-  addDataAddress: (newDataAddress: any) => void;
-  cleanAddressValues: () => void;
 }

@@ -52,7 +52,7 @@
           "offer": false
       }
   ],
-  "deserts": [
+  "doces": [
       {
           "id": 8,
           "name": "Casquinha mista",
@@ -75,7 +75,7 @@
           "offer": false
       }
   ],
-  "drinks": [
+  "bebidas": [
       {
           "id": 11,
           "name": "Coca-cola lata",
@@ -91,7 +91,7 @@
           "offer": false
       }
   ],
-  "combo": [
+  "combos": [
       {
           "id": 13,
           "name": "Combo 1",

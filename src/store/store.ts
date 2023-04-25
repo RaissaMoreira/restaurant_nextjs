@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { StateOne, StateThree, StateTwo } from "./types";
+import { StateOne, StateTwo } from "./types";
 
 export const useStore = create(
   persist<StateOne>(
@@ -19,6 +19,7 @@ export const useStore = create(
   updateObservations: (id, observations) =>
     set((state) => {
       const index = state.cart.findIndex((item) => item.id === id);
+
       if (index >= 0) {
         const updatedCartItem = {
           ...state.cart[index],
@@ -34,7 +35,7 @@ export const useStore = create(
       return state;
     }),
 
-  addToCart: (newItem, observations) =>
+  addToCart: (newItem) =>
     set((state) => {
       const cartItem = state.cart.find((item) => item.id === newItem.id);
       const index = state.cart.findIndex((item) => item.id === newItem.id);
@@ -69,7 +70,7 @@ export const useStore = create(
       criado um novo objeto que é uma cópia de newItem 
       com a propriedade quantity definida como 1
       */
-        const itemWithObservations = { ...newItem, quantity: 1, observations };
+        const itemWithObservations = { ...newItem, quantity: 1, observations: '' };
         return {
           cart: [...state.cart, itemWithObservations],
           totalPrice: state.totalPrice + newItem.price,
@@ -122,11 +123,6 @@ export const useStore = create(
   }
 ));
 
-const persistConfig = {
-  name: "form-storage",
-  getStorage: () => localStorage, // ou sessionStorage
-};
-
 export const useFormStore = create(
   persist<StateTwo>(
     (set) => ({
@@ -139,20 +135,10 @@ export const useFormStore = create(
         city: "",
         state: "",
         neighborhood: "",
-        deliveryType: "store",
+        deliveryType: "loja",
         paymentType: "cartão",
       },
       dataForm: [],
-
-      // address: {
-      //   cep: "",
-      //   street: "",
-      //   number: "",
-      //   city: "",
-      //   state: "",
-      //   neighborhood: "",
-      // },
-      // dataAddress: [],
 
       cleanValues: () =>
         set((prevState) => ({
@@ -167,24 +153,10 @@ export const useFormStore = create(
             city: "",
             state: "",
             neighborhood: "",
-            deliveryType: "store",
+            deliveryType: "loja",
             paymentType: "cartão",
           },
         })),
-
-      // cleanAddressValues: () =>
-      //   set((prevState) => ({
-      //     ...prevState,
-      //     form: {
-      //       ...prevState?.dataAddress,
-      //       cep: "",
-      //       street: "",
-      //       number: "",
-      //       city: "",
-      //       state: "",
-      //       neighborhood: "",
-      //     },
-      //   })),
 
       deleteAddress: () =>
         set((prevState) => {
@@ -214,45 +186,9 @@ export const useFormStore = create(
       },
 
     }),
-    persistConfig
+    {
+      name: "form-storage",
+      getStorage: () => localStorage,
+    }
   )
 );
-
-export const useAddressStore = create(
-  persist<StateThree>(
-    (set) => ({
-      address: {
-        cep: "",
-        street: "",
-        number: "",
-        city: "",
-        state: "",
-        neighborhood: "",
-      },
-      dataAddress: [],
-
-      addDataAddress: (newDataAddress) =>
-        set((state) => ({
-          dataAddress: [...state.dataAddress, { ...newDataAddress }],
-        })),
-
-      cleanAddressValues: () =>
-        set((prevState) => ({
-          ...prevState,
-          address: {
-            ...prevState?.address,
-            cep: "",
-            street: "",
-            number: "",
-            city: "",
-            state: "",
-            neighborhood: "",
-          },
-      })),
-    }),
-    {
-      name: "address-storage",
-      getStorage: () => localStorage,
-    } // ou sessionStorage
-  )
-)

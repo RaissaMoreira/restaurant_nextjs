@@ -1,15 +1,16 @@
-import { ChangeEvent, SetStateAction, useCallback, useEffect } from "react";
+import { ChangeEvent, SetStateAction, useCallback, useContext } from "react";
 import styles from "./Address.module.scss";
 import { useFormStore } from "@component/store/store";
-import { showToast } from "@component/modules/toast";
 import { formAddress } from "@component/modules/schemas";
 import axios from "axios";
+import { ToastContext } from "@component/context/ToastContext";
 
 interface IAddress {
   closeModal: () => void;
 }
 
 export default function Address({closeModal}: IAddress) {
+  const { showToast } = useContext(ToastContext);
   const form = useFormStore((s) => s.form);
 
   const handleInputChange = (e: any) => {

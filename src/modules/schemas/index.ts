@@ -1,5 +1,5 @@
+import { fullNameRegex } from '@component/utils/constants';
 import * as Yup from 'yup';
-import { fullNameRegex } from '../constants/uiConstants';
 
 export const formUser = Yup.object().shape({
   celular: Yup.string().min(11,"O campo 'Celular' está inválido").max(11,"O campo 'Celular' está inválido").required("O campo 'Celular' é obrigatório"),

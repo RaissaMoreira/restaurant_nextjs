@@ -4,8 +4,8 @@ import styles from "./ItemsList.module.scss";
 import api from "@component/services/api";
 import { useStore } from "@component/store/store";
 import { IFood } from "@component/utils/types";
-import { capitalizeFirstLetter } from "@component/services/functions";
 import Loading from "../Loading";
+import { capitalizeFirstLetter } from "@component/utils/functions";
 
 export default function ItemsList() {
   const [foods, setFoods] = useState<IFood[]>([]);

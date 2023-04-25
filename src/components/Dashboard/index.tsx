@@ -1,9 +1,5 @@
 import {
-  Box,
   Collapse,
-  InputLabel,
-  MenuItem,
-  Select,
   Table,
   TableBody,
   TableCell,
@@ -12,16 +8,16 @@ import {
   TableRow,
 } from "@mui/material";
 import styles from "./Dashboard.module.scss";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import { useFormStore, useStore } from "@component/store/store";
 import React from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import api from "@component/services/api";
-import { showToast } from "@component/modules/toast";
 import { phoneMask } from "@component/utils/phoneMask";
+import { ToastContext } from "@component/context/ToastContext";
 
 export default function Dasboard() {
+  const { showToast } = useContext(ToastContext);
   const dataForm = useFormStore((s) => s.dataForm);
   const { deleteData } = useFormStore();
   const [open, setOpen] = useState<{ [key: number]: boolean }>({});
@@ -49,7 +45,7 @@ export default function Dasboard() {
 
   const removeOrder = (index: number) => {
     deleteData(index);
-    showToast({message: "Pedido excluído com sucesso!", status: "success"});
+    showToast({message: "Pedido cancelado!", status: "success"});
   }
 
   const position = (e: number) => {

@@ -2,10 +2,8 @@ import Link from "next/link";
 import styles from "../styles/Order.module.scss";
 import { CgArrowLongLeft } from "react-icons/cg";
 import Dashboard from "@component/components/Dashboard";
-import { useFormStore } from "@component/store/store";
 
 export default function Order() {
-  const dataForm = useFormStore((s) => s.dataForm);
   return (
     <section className="p-5 h-[100vh]">
       <div>

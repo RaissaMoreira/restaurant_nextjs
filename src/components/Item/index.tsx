@@ -2,8 +2,6 @@ import Image from "next/image";
 import styles from "./Item.module.scss";
 import { IFood } from "@component/utils/types";
 import { useStore } from "@component/store/store";
-import UseWindowSize from "@component/hooks/useWindowSize";
-import { useRouter } from "next/router";
 
 interface ItemProps {
   item: IFood;
@@ -12,16 +10,8 @@ interface ItemProps {
 export default function Item({ item }: ItemProps) {
   const { addToCart } = useStore();
   const imagePath = `/images/${item.id}.png`;
-  const size = UseWindowSize();
-  const router = useRouter();
 
   const handleAddToCart = () => {
-    // if (size.width <= 700) {
-    //   router.push(`/AddToCart/${item.id}`);
-    // } else {
-    //   addToCart(item);
-    // }
-
     addToCart(item);
   }
 
