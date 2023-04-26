@@ -22,6 +22,7 @@ export default function Dasboard() {
   const { deleteData } = useFormStore();
   const [open, setOpen] = useState<{ [key: number]: boolean }>({});
   const [status, setStatus] = useState([]);
+  const [data, setData] = useState([]);
 
   async function fetchApiStatus() {
     try {
@@ -35,6 +36,10 @@ export default function Dasboard() {
   useEffect(() => {
     fetchApiStatus();
   }, []);
+
+  useEffect(() => {
+    setData(dataForm);
+  },[])
 
   const toggleOpen = (index: number) => {
     setOpen((prevOpenStates) => ({
@@ -69,7 +74,7 @@ export default function Dasboard() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {dataForm?.map((el, index) => (
+          {data?.map((el, index) => (
             <Fragment key={index}>
               <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
                 <TableCell className="py-0">
