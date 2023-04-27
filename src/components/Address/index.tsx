@@ -1,9 +1,12 @@
-import { ChangeEvent, SetStateAction, useCallback, useContext } from "react";
+import { useCallback, useContext } from "react";
 import styles from "./Address.module.scss";
 import { useFormStore } from "@component/store/store";
 import { formAddress } from "@component/modules/schemas";
 import axios from "axios";
 import { ToastContext } from "@component/context/ToastContext";
+import { removeNumbers } from "@component/utils/removeNumbers";
+import { removeLetters } from "@component/utils/removeLetters";
+import { maskCep } from "@component/utils/cepMask";
 
 interface IAddress {
   closeModal: () => void;
@@ -69,9 +72,13 @@ export default function Address({closeModal}: IAddress) {
           message: "Endereço salvo com sucesso!",
           status: "success",
         });
-      } catch (error) {
-        showToast({ message: error?.message, status: "error" });
-        console.warn(error);
+      } catch (error: unknown ) {
+        if (error instanceof Error) {
+          showToast({ message: error.message, status: "error" });
+          console.warn(error.message);
+        } else {
+          console.warn('Unexpected error', error);
+        }
       }
     },
     [form]
@@ -95,8 +102,8 @@ export default function Address({closeModal}: IAddress) {
             id="cep"
             tabIndex={1}
             maxLength={9}
-            onChange={(e) => getCep(e.target.value)}
-            value={form.cep || ""}
+            value={maskCep(form.cep as string) ?? ""}
+            onChange={(e) => getCep(removeLetters(e.target.value?.trimStart()))}
             required
             placeholder="Digite seu CEP"
             type="text"
@@ -110,7 +117,7 @@ export default function Address({closeModal}: IAddress) {
           <input
             name="city"
             id="city"
-            value={form.city || ""}
+            value={removeNumbers(form.city) ?? ""}
             onChange={handleInputChange}
             required
             placeholder="Cidade"
@@ -125,7 +132,7 @@ export default function Address({closeModal}: IAddress) {
           <input
             name="state"
             id="state"
-            value={form.state || ""}
+            value={removeNumbers(form.state) ?? ""}
             onChange={handleInputChange}
             required
             placeholder="Estado"
@@ -140,7 +147,7 @@ export default function Address({closeModal}: IAddress) {
           <input
             name="neighborhood"
             id="neighborhood"
-            value={form.neighborhood || ""}
+            value={form.neighborhood ?? ""}
             onChange={handleInputChange}
             required
             placeholder="Digite o Bairro"
@@ -157,7 +164,7 @@ export default function Address({closeModal}: IAddress) {
           <input
             name="street"
             id="street"
-            value={form.street || ""}
+            value={form.street ?? ""}
             onChange={handleInputChange}
             required
             placeholder="Digite sua rua"
@@ -172,7 +179,7 @@ export default function Address({closeModal}: IAddress) {
           <input
             name="number"
             id="number"
-            value={form.number || ""}
+            value={removeLetters(form.number as string) ?? ""}
             onChange={handleInputChange}
             required
             placeholder="Digite o número"

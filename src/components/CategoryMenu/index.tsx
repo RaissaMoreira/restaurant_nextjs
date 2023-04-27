@@ -24,7 +24,7 @@ export default function CategoryMenu() {
               key={category?.id}
               onClick={() => onCategoryClick(category?.id)}
               className={
-                categoryActive === category?.id && styles.activeCategory
+                categoryActive === category?.id ? styles.activeCategory : ''
               }
             >
               <Icon size={40} className={styles.icons} />

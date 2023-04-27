@@ -2,7 +2,7 @@ import { fullNameRegex } from '@component/utils/constants';
 import * as Yup from 'yup';
 
 export const formUser = Yup.object().shape({
-  celular: Yup.string().min(11,"O campo 'Celular' está inválido").max(11,"O campo 'Celular' está inválido").required("O campo 'Celular' é obrigatório"),
+  celular: Yup.string().min(15, 'Celular inválido').required('Celular inválido'),
   name: Yup.string().required("O campo 'Nome' é obrigatório").matches(fullNameRegex, 'O campo "Nome" deve conter nome e sobrenome'),
 });
 

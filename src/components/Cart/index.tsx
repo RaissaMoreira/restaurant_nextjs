@@ -17,8 +17,8 @@ export default function Cart({ extendedClass, buttonActive }: ICart) {
 
   const removeAllItemsFromCart = () => {
     cleanCart();
-    showToast({message: 'Items removidos com sucesso!', status: 'success'});
-  }
+    showToast({ message: "Items removidos com sucesso!", status: "success" });
+  };
 
   return (
     <section
@@ -43,23 +43,26 @@ export default function Cart({ extendedClass, buttonActive }: ICart) {
         </div>
         <div>
           <div className="flex items-center justify-between">
-          {cart.length > 1 && (
-            <div onClick={removeAllItemsFromCart} className="text-dark-grey flex items-center justify-end mr-5 gap-2 mb-4 cursor-pointer">
-              <BsTrash/>
-              <p className=" text-dark-grey">Esvaziar carrinho</p>
-            </div>
-          )}
+            {cart.length > 1 && buttonActive && (
+              <div
+                onClick={removeAllItemsFromCart}
+                className="text-dark-grey flex items-center justify-end mr-5 gap-2 mb-4 cursor-pointer"
+              >
+                <BsTrash />
+                <p className="text-dark-grey">Esvaziar carrinho</p>
+              </div>
+            )}
 
-          {cart.length > 0 && (
-            <div className="flex justify-end mr-5 gap-3 mb-4">
-              <p className="text-[1.1rem] font-semibold">Total:</p>
-              <span className="text-[1.1rem] font-bold text-yellow">
-                {`R$ ${totalPrice?.toLocaleString("pt-br", {
-                  minimumFractionDigits: 2,
-                })}`}
-              </span>
-            </div>
-          )}
+            {cart.length > 0 && (
+              <div className="flex justify-end mr-5 gap-3 mb-4">
+                <p className="text-[1.1rem] font-semibold">Total:</p>
+                <span className="text-[1.1rem] font-bold text-yellow">
+                  {`R$ ${totalPrice?.toLocaleString("pt-br", {
+                    minimumFractionDigits: 2,
+                  })}`}
+                </span>
+              </div>
+            )}
           </div>
           <div
             className={

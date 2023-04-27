@@ -2,8 +2,9 @@ import { useStore } from "@component/store/store";
 import styles from "./Observations.module.scss";
 import { useState } from "react";
 import Modal from "@mui/material/Modal";
+import { IFood } from "@component/utils/types";
 
-export default function ObsModal({ item }) {
+export default function ObsModal({ item }: IFood) {
   const { addToCart, deleteItem, updateObservations } = useStore();
   const [open, setOpen] = useState(false);
   const [obs, setObs] = useState(item.observations);

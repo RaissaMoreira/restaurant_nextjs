@@ -10,6 +10,7 @@ import { capitalizeFirstLetter } from "@component/utils/functions";
 export default function ItemsList() {
   const [foods, setFoods] = useState<IFood[]>([]);
   const [loading, setLoading] = useState(false);
+  const [isReady, setIsReady] = useState(false); // componente aparece após renderizar a página
   const { selectedCategory } = useStore();
 
   async function fetchApi() {
@@ -17,9 +18,10 @@ export default function ItemsList() {
       setLoading(true);
       setTimeout(async () => {
         const response = await api.get(`/${selectedCategory}`);
-        setFoods(response.data);
+        setFoods(response?.data);
         setLoading(false);
-      }, 100);
+        setIsReady(true);
+      }, 150);
     } catch (error) {
       console.warn(error);
     }
@@ -30,21 +32,29 @@ export default function ItemsList() {
   }, [selectedCategory]);
 
   return (
-    <div className={`${styles.container} ${loading && 'justify-center items-center w-full'} w-full flex flex-col`}>
-      {loading ? (
-        <Loading active={loading} />
-      ) : (
-        <>
-          <h3 className="mb-5 font-semibold text-[1.2rem]">
-            {capitalizeFirstLetter(selectedCategory)}
-          </h3>
-          <div className="flex flex-wrap gap-2">
-            {foods?.map((el) => (
-              <Item key={el.id} item={el} />
-            ))}
-          </div>
-        </>
+    <>
+      {isReady && (
+        <div
+          className={`${styles.container} ${
+            loading && "justify-center items-center w-full"
+          } w-full flex flex-col`}
+        >
+          {loading ? (
+            <Loading active={loading} />
+          ) : (
+            <>
+              <h3 className="mb-5 font-semibold text-[1.2rem]">
+                {capitalizeFirstLetter(selectedCategory)}
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {foods?.map((el) => (
+                  <Item key={el.id} item={el} />
+                ))}
+              </div>
+            </>
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 }

@@ -1,6 +1,8 @@
+import { IFood } from "@component/utils/types";
+
 export interface StateOne {
   totalPrice: any;
-  cart: any[];
+  cart: IFood[];
   selectedCategory: string;
   changeCategory: (selectedCategory: StateOne["selectedCategory"]) => void;
   addToCart: (newItem: any) => void;
@@ -36,7 +38,7 @@ export interface StateTwo {
     deliveryType: string;
     paymentType: string;
   };
-  dataForm: any[];
+  dataForm: IForm[];
   addDataForm: (newData: any) => void;
   cleanValues: () => void;
   deleteAddress: () => void;

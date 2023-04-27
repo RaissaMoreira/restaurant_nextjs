@@ -12,6 +12,9 @@ import Address from "@component/components/Address";
 import CardAddress from "@component/components/Address/CardAddress";
 import { useRouter } from "next/router";
 import { ToastContext } from "@component/context/ToastContext";
+import { phoneMask } from "@component/utils/phoneMask";
+import { removeNumbers } from "@component/utils/removeNumbers";
+import { uppercaseInitialLetters } from "@component/utils/uppercaseInitialLetters";
 
 export default function Payment() {
   const { showToast } = useContext(ToastContext);
@@ -58,8 +61,12 @@ export default function Payment() {
           cleanCart();
         }
       } catch (error) {
-        showToast({ message: error?.message, status: "error" });
-        console.warn(error);
+        if (error instanceof Error) {
+          showToast({ message: error.message, status: "error" });
+          console.warn(error.message);
+        } else {
+          console.warn('Unexpected error', error);
+        }
       }
     },
     [form]
@@ -115,7 +122,7 @@ export default function Payment() {
                 <input
                   name="name"
                   id="name"
-                  value={form.name}
+                  value={uppercaseInitialLetters(removeNumbers(form.name))}
                   onChange={handleInputChange}
                   required
                   className="md:w-1/2 w-full"
@@ -134,7 +141,8 @@ export default function Payment() {
                   type="text"
                   required
                   className="md:w-1/2 w-full"
-                  value={form.celular}
+                  value={phoneMask(form?.celular as string)}
+                  maxLength={15}
                   onChange={handleInputChange}
                 />
               </div>
@@ -235,7 +243,7 @@ export default function Payment() {
           </div>
           </div>
           <button
-            className="btnStyles py-1"
+            className="btnStyles py-1 mt-5"
             type="submit"
             onClick={(e) => handleClick(e)}
           >

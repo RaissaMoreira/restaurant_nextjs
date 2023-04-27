@@ -3,7 +3,7 @@
 .categoryMenu {
   min-width: 8.125rem;
   width: 8.125rem;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #fff;
   display: flex;
   align-items: center;
@@ -62,6 +62,7 @@
   .categoryMenu {
     width: 100%;
     height: fit-content;
+    min-height: fit-content;
 
     > ul {
       flex-direction: row;
