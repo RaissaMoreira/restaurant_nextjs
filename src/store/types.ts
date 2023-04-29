@@ -8,7 +8,7 @@ export interface StateOne {
   addToCart: (newItem: any) => void;
   deleteItem: (deleteItem: any) => void;
   totalItems: (state: StateOne) => number;
-  updateObservations: (observations: string, id: number) => void;
+  updateObservations: (id: number, observations: string | undefined) => void;
   cleanCart: () => void;
 }
 
@@ -23,6 +23,7 @@ export interface IForm {
   neighborhood?: string;
   deliveryType: string;
   paymentType: string;
+  order?: IFood[]
 }
 
 export interface StateTwo {

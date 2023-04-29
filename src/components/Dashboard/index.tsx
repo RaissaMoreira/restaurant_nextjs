@@ -69,11 +69,11 @@ export default function Dasboard() {
         <TableHead>
           <TableRow>
             <TableCell />
-            <TableCell>id</TableCell>
-            <TableCell>Cliente</TableCell>
-            <TableCell>Retirada</TableCell>
-            <TableCell>Pagamento</TableCell>
-            <TableCell>Ações</TableCell>
+            <TableCell sx={{fontWeight:600}}>id</TableCell>
+            <TableCell sx={{fontWeight:600}}>Cliente</TableCell>
+            <TableCell sx={{fontWeight:600}}>Retirada</TableCell>
+            <TableCell sx={{fontWeight:600}}>Pagamento</TableCell>
+            <TableCell sx={{fontWeight:600}}>Ações</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -81,8 +81,8 @@ export default function Dasboard() {
               <Fragment key={index}>
                 <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
                   <TableCell className="py-0">
-                    <div onClick={() => toggleOpen(index)}>
-                      <IoIosArrowDown />
+                    <div className="cursor-pointer" onClick={() => toggleOpen(index)}>
+                      <IoIosArrowDown className="text-pink" />
                     </div>
                   </TableCell>
                   <TableCell className="py-0">{position(index)}</TableCell>
@@ -116,13 +116,14 @@ export default function Dasboard() {
                     <Collapse in={open[index]} timeout="auto" unmountOnExit>
                       <div className="flex msm:flex-row flex-col msm:gap-10 msm:space-y-0 space-y-4 p-4">
                         <div>
-                          <p className="font-semibold">Contato:</p>
+                          <p className="font-semibold text-pink">Contato:</p>
                           <p>{phoneMask(el?.celular as string)}</p>
                         </div>
                         <div>
-                          <p className="font-semibold">Pedido:</p>
+
+                          <p className="font-semibold text-pink">Pedido:</p>
                           <div className="flex flex-col space-y-3">
-                            {(el?.order as IFood[])?.map((item, index) => (
+                            {el?.order?.map((item, index) => (
                               <div key={index}>
                                 <p>{`${item.quantity}x ${item.name}`}</p>
                                 {item?.observations && (
@@ -134,7 +135,7 @@ export default function Dasboard() {
                         </div>
                         {el?.cep && (
                           <div>
-                            <p className="font-semibold">Endereço:</p>
+                            <p className="font-semibold text-pink">Endereço:</p>
                             <p>{`CEP - ${el?.cep}`}</p>
                             <p>{`${el?.city} - ${el?.state}`}</p>
                             <p>{`${el?.street}, ${el?.neighborhood}, ${el?.number}`}</p>

@@ -4,7 +4,11 @@ import { useState } from "react";
 import Modal from "@mui/material/Modal";
 import { IFood } from "@component/utils/types";
 
-export default function ObsModal({ item }: IFood) {
+interface IProps {
+  item: IFood;
+}
+
+export default function ObsModal({ item }: IProps) {
   const { addToCart, deleteItem, updateObservations } = useStore();
   const [open, setOpen] = useState(false);
   const [obs, setObs] = useState(item.observations);
@@ -52,7 +56,7 @@ export default function ObsModal({ item }: IFood) {
           cols={33}
         />
         <div className="w-full mt-3 flex items-center justify-evenly">
-          <button className={styles.btnRemove} onClick={() => updateObservations(item.id, obs)}>
+          <button className={styles.btnRemove} onClick={() => updateObservations(item?.id, obs)}>
             Salvar
           </button>
         </div>

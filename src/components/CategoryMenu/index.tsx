@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { categoriesList } from "../../utils/constants";
 import styles from "./CategoryMenu.module.scss";
 import { useStore } from "../../store/store";
@@ -6,13 +6,18 @@ import { BsGear } from "react-icons/bs";
 import Link from "next/link";
 
 export default function CategoryMenu() {
-  const [categoryActive, setCategoryActive] = useState("pizza");
+  const [categoryActive, setCategoryActive] = useState("");
   const category = useStore((state) => state.changeCategory);
+  const { selectedCategory } = useStore();
 
   const onCategoryClick = (id: string) => {
     setCategoryActive(id);
     category(id);
   };
+
+  useEffect(() => {
+    setCategoryActive(selectedCategory)
+  }, [selectedCategory])
 
   return (
     <div className={styles.categoryMenu}>
