@@ -29,10 +29,10 @@ export default function Cart({ extendedClass, buttonActive }: ICart) {
       <div className="flex flex-col justify-between h-full">
         <div className={`flex flex-col gap-5`}>
           <h3 className="text-[1.3rem] font-semibold">Seu pedido</h3>
-          {cart.length > 0 ? (
+          {cart?.length > 0 ? (
             <div className={`${styles.container} flex flex-col gap-5`}>
-              {cart.map((el) => (
-                <CartItem key={el.id} item={el} />
+              {cart?.map((el) => (
+                <CartItem key={el?.id} item={el} />
               ))}
             </div>
           ) : (
@@ -43,7 +43,7 @@ export default function Cart({ extendedClass, buttonActive }: ICart) {
         </div>
         <div>
           <div className="flex items-center justify-between">
-            {cart.length > 1 && buttonActive && (
+            {cart?.length > 1 && buttonActive && (
               <div
                 onClick={removeAllItemsFromCart}
                 className="text-dark-grey flex items-center justify-end mr-5 gap-2 mb-4 cursor-pointer"
@@ -53,7 +53,7 @@ export default function Cart({ extendedClass, buttonActive }: ICart) {
               </div>
             )}
 
-            {cart.length > 0 && (
+            {cart?.length > 0 && (
               <div className="flex justify-end mr-5 gap-3 mb-4">
                 <p className="text-[1.1rem] font-semibold">Total:</p>
                 <span className="text-[1.1rem] font-bold text-yellow">
@@ -72,7 +72,7 @@ export default function Cart({ extendedClass, buttonActive }: ICart) {
             <Link
               href="/Payment"
               className={
-                cart.length < 1 ? `${styles.btnDisabled}` : `${styles.btn}`
+                cart?.length < 1 ? `${styles.btnDisabled}` : `${styles.btn}`
               }
             >
               Finalizar compra

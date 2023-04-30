@@ -102,7 +102,7 @@ export default function Address({closeModal}: IAddress) {
             id="cep"
             tabIndex={1}
             maxLength={9}
-            value={maskCep(form.cep as string) ?? ""}
+            value={maskCep(form?.cep as string) ?? ""}
             onChange={(e) => getCep(removeLetters(e.target.value?.trimStart()))}
             required
             placeholder="Digite seu CEP"
@@ -117,7 +117,7 @@ export default function Address({closeModal}: IAddress) {
           <input
             name="city"
             id="city"
-            value={removeNumbers(form.city) ?? ""}
+            value={removeNumbers(form?.city as string) ?? ""}
             onChange={handleInputChange}
             required
             placeholder="Cidade"
@@ -132,7 +132,7 @@ export default function Address({closeModal}: IAddress) {
           <input
             name="state"
             id="state"
-            value={removeNumbers(form.state) ?? ""}
+            value={removeNumbers(form?.state as string) ?? ""}
             onChange={handleInputChange}
             required
             placeholder="Estado"
@@ -147,7 +147,7 @@ export default function Address({closeModal}: IAddress) {
           <input
             name="neighborhood"
             id="neighborhood"
-            value={form.neighborhood ?? ""}
+            value={form?.neighborhood ?? ""}
             onChange={handleInputChange}
             required
             placeholder="Digite o Bairro"
@@ -164,7 +164,7 @@ export default function Address({closeModal}: IAddress) {
           <input
             name="street"
             id="street"
-            value={form.street ?? ""}
+            value={form?.street ?? ""}
             onChange={handleInputChange}
             required
             placeholder="Digite sua rua"
@@ -179,7 +179,7 @@ export default function Address({closeModal}: IAddress) {
           <input
             name="number"
             id="number"
-            value={removeLetters(form.number as string) ?? ""}
+            value={removeLetters(form?.number as string) ?? ""}
             onChange={handleInputChange}
             required
             placeholder="Digite o número"

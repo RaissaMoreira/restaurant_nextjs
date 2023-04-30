@@ -122,7 +122,7 @@ export default function Payment() {
                 <input
                   name="name"
                   id="name"
-                  value={uppercaseInitialLetters(removeNumbers(form.name))}
+                  value={uppercaseInitialLetters(removeNumbers(form?.name))}
                   onChange={handleInputChange}
                   required
                   className="md:w-1/2 w-full"

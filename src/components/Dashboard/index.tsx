@@ -29,7 +29,7 @@ export default function Dasboard() {
   async function fetchApiStatus() {
     try {
       const response = await api.get(`/status`);
-      setStatus(response.data);
+      setStatus(response?.data);
     } catch (error) {
       console.warn(error);
     }
@@ -86,9 +86,9 @@ export default function Dasboard() {
                     </div>
                   </TableCell>
                   <TableCell className="py-0">{position(index)}</TableCell>
-                  <TableCell className="py-0">{el.name}</TableCell>
-                  <TableCell className="py-0">{el.deliveryType}</TableCell>
-                  <TableCell className="py-0">{el.paymentType}</TableCell>
+                  <TableCell className="py-0">{el?.name}</TableCell>
+                  <TableCell className="py-0">{el?.deliveryType}</TableCell>
+                  <TableCell className="py-0">{el?.paymentType}</TableCell>
                   <TableCell className="py-3">
                     <div className="flex space-x-3 items-start lmd:justify-start justify-between">
                       <select className={`${styles.status}`} name="status">
@@ -125,9 +125,9 @@ export default function Dasboard() {
                           <div className="flex flex-col space-y-3">
                             {el?.order?.map((item, index) => (
                               <div key={index}>
-                                <p>{`${item.quantity}x ${item.name}`}</p>
+                                <p>{`${item?.quantity}x ${item?.name}`}</p>
                                 {item?.observations && (
-                                  <p>{`Observações: ${item.observations}`}</p>
+                                  <p>{`Observações: ${item?.observations}`}</p>
                                 )}
                               </div>
                             ))}

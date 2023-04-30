@@ -30,12 +30,12 @@ export interface StateTwo {
   form: {
     name: string;
     celular: string | number;
-    cep: string | number;
-    street: string;
-    number: string | number;
-    city: string;
-    state: string;
-    neighborhood: string;
+    cep?: string | number;
+    street?: string;
+    number?: string | number;
+    city?: string;
+    state?: string;
+    neighborhood?: string;
     deliveryType: string;
     paymentType: string;
   };

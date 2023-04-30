@@ -22,8 +22,8 @@ export default function CategoryMenu() {
   return (
     <div className={styles.categoryMenu}>
       <ul className={styles.scrollbar}>
-        {categoriesList.map((category) => {
-          const Icon = category.icon;
+        {categoriesList?.map((category) => {
+          const Icon = category?.icon;
           return (
             <li
               key={category?.id}

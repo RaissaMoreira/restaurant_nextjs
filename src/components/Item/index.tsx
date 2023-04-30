@@ -24,7 +24,7 @@ export default function Item({ item }: ItemProps) {
         {item?.offer && <div className={`${styles.offer}`}>oferta</div>}
         <Image 
           src={imagePath}
-          alt={item.name}
+          alt={item?.name}
           width={110}
           height={90}
           unoptimized

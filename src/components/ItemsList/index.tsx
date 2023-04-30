@@ -16,12 +16,10 @@ export default function ItemsList() {
   async function fetchApi() {
     try {
       setLoading(true);
-      setTimeout(async () => {
-        const response = await api.get(`/${selectedCategory}`);
-        setFoods(response?.data);
-        setLoading(false);
-        setIsReady(true);
-      }, 150);
+      const response = await api.get(`/${selectedCategory}`);
+      setFoods(response?.data);
+      setLoading(false);
+      setIsReady(true);
     } catch (error) {
       console.warn(error);
     }
@@ -48,7 +46,7 @@ export default function ItemsList() {
               </h3>
               <div className="flex flex-wrap gap-2">
                 {foods?.map((el) => (
-                  <Item key={el.id} item={el} />
+                  <Item key={el?.id} item={el} />
                 ))}
               </div>
             </>
