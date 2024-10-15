@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "back": "json-server --watch db.json --port 3001 --host 192.168.1.9",
+    "back": "json-server --watch db.json --port 3001 --host 127.0.0.1",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
