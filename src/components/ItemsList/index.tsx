@@ -6,6 +6,7 @@ import { useStore } from "@component/store/store";
 import { IFood } from "@component/utils/types";
 import Loading from "../Loading";
 import { capitalizeFirstLetter } from "@component/utils/captalizeFirstLetter";
+import axios from "axios";
 
 export default function ItemsList() {
   const [foods, setFoods] = useState<IFood[]>([]);
