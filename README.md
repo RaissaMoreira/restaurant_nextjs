@@ -1,38 +1,17 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# :hamburger:Restaurant:hamburger:
 
-## Getting Started
+### Desenvolvido por Raissa Mayara Moreira
 
-First, run the development server:
+Este é um aplicativo de restaurante desenvolvido com **React**, **Next.js** e **json-server**. Ele apresenta um menu com opções de **hambúrgueres**, **doces**, **bebidas**, **combos** e **pizzas**. O usuário pode navegar pelas categorias do menu, adicionar itens ao **carrinho de compras**, e prosseguir para a página de **pagamento**. Além disso, há uma página de **gerenciamento de pedidos**, onde os pedidos podem ser visualizados e administrados.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+O backend usa o `json-server` para simular uma API, fornecendo os dados necessários para o funcionamento do aplicativo.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Como Rodar o Projeto
+Siga os passos abaixo para clonar e rodar o projeto localmente:
+1.  **Clone o repositório**: Primeiro, clone o repositório para sua máquina local;
+2. **Instale as dependências**: Entre na pasta do projeto e instale as dependências: `'npm install'` 
+3. **Rodar o frontend**: Para iniciar o frontend, execute o comando abaixo: `'npm run dev
+'` 
+**Rodar o backend (json-server)**: Para iniciar o backend (simulado pelo `json-server`), use o comando: `npm run back`
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Agora, o frontend e o backend estarão rodando localmente e conectados, permitindo que você acesse todas as funcionalidades do aplicativo.
