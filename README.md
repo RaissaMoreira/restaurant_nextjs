@@ -15,3 +15,11 @@ Siga os passos abaixo para clonar e rodar o projeto localmente:
 **Rodar o backend (json-server)**: Para iniciar o backend (simulado pelo `json-server`), use o comando: `npm run back`
 
 Agora, o frontend e o backend estarão rodando localmente e conectados, permitindo que você acesse todas as funcionalidades do aplicativo.
+
+### Preview
+![home page](https://github.com/RaissaMoreira/restaurant_nextjs/blob/main/public/preview/image-1.png?raw=true)
+![payment page](https://github.com/RaissaMoreira/restaurant_nextjs/blob/main/public/preview/image-2.png?raw=true)
+![Order management page](https://github.com/RaissaMoreira/restaurant_nextjs/blob/main/public/preview/image-3.png?raw=true)
+![home page - mobile](https://github.com/RaissaMoreira/restaurant_nextjs/blob/main/public/preview/image-4.png?raw=true)
+![cart page - mobile](https://github.com/RaissaMoreira/restaurant_nextjs/blob/main/public/preview/image-5.png?raw=true)
+![payment page - mobile](https://github.com/RaissaMoreira/restaurant_nextjs/blob/main/public/preview/image-6.png?raw=true)
